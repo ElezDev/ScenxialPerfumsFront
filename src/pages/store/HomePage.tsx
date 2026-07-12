@@ -145,18 +145,24 @@ export function HomePage() {
                 Asesoramiento exclusivo
               </h2>
               <p className="mt-3 font-body text-sm leading-relaxed text-bone/65">
-                {BRAND.motto}. Elegí tu fragancia con la guía de nuestros expertos.
+                {BRAND.motto}. Descubrí tu perfil olfativo o consultá con nuestros expertos.
               </p>
             </div>
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="boutique-cta-solid inline-flex shrink-0 items-center gap-2"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Consultar por WhatsApp
-            </a>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link to="/asesoria" className="boutique-cta-solid inline-flex shrink-0 items-center justify-center gap-2">
+                Descubrí tu perfil
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="boutique-cta-whatsapp inline-flex shrink-0 items-center justify-center gap-2"
+              >
+                <MessageCircle className="h-4 w-4" />
+                WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </section>

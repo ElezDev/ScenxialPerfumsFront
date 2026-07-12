@@ -6,6 +6,7 @@ import { StoreLayout } from './layouts/StoreLayout'
 import { AdminLayout } from './layouts/AdminLayout'
 import { HomePage } from './pages/store/HomePage'
 import { CatalogPage } from './pages/store/CatalogPage'
+import { AdvisoryPage } from './pages/store/AdvisoryPage'
 import { ProductPage } from './pages/store/ProductPage'
 import { CartPage } from './pages/store/CartPage'
 import { CheckoutPage, CheckoutResultPage } from './pages/store/CheckoutPage'
@@ -30,6 +31,7 @@ export default function App() {
             <Route element={<StoreLayout />}>
               <Route index element={<HomePage />} />
               <Route path="catalogo" element={<CatalogPage />} />
+              <Route path="asesoria" element={<AdvisoryPage />} />
               <Route path="producto/:slug" element={<ProductPage />} />
               <Route path="carrito" element={<CartPage />} />
               <Route path="checkout" element={<CheckoutPage />} />

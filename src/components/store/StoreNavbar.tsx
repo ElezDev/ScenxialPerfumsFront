@@ -59,6 +59,9 @@ export function StoreNavbar({ transparent = false }: StoreNavbarProps) {
             <NavLink to="/catalogo" className={navLinkClass}>
               Catálogo
             </NavLink>
+            <NavLink to="/asesoria" className={navLinkClass}>
+              Asesoría
+            </NavLink>
           </nav>
 
           {/* Desktop: logo centrado */}
@@ -127,6 +130,9 @@ export function StoreNavbar({ transparent = false }: StoreNavbarProps) {
               </NavLink>
               <NavLink to="/catalogo" className={mobileNavLinkClass} onClick={() => setMenuOpen(false)}>
                 Catálogo
+              </NavLink>
+              <NavLink to="/asesoria" className={mobileNavLinkClass} onClick={() => setMenuOpen(false)}>
+                Asesoría
               </NavLink>
               <NavLink to="/carrito" className={mobileNavLinkClass} onClick={() => setMenuOpen(false)}>
                 Carrito {totalItems > 0 && `(${totalItems})`}

@@ -75,6 +75,7 @@ export function StoreFooter() {
             <div className="mt-8 flex gap-8">
               {[
                 { to: '/catalogo', label: 'Catálogo' },
+                { to: '/asesoria', label: 'Asesoría' },
                 { to: '/carrito', label: 'Carrito' },
                 { to: '/login', label: 'Cuenta' },
               ].map((link) => (
