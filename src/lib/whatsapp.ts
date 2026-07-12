@@ -1,7 +1,7 @@
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '5491100000001'
 const WHATSAPP_MESSAGE =
   import.meta.env.VITE_WHATSAPP_MESSAGE ||
-  'Hola! Quiero consultar por productos en Permuferia.'
+  'Hola! Quiero consultar por productos en Scenxial Perfums.'
 
 export function whatsappUrl(message = WHATSAPP_MESSAGE): string {
   const params = new URLSearchParams({ text: message })

@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { MarbleBackground } from '../../components/catalog/MarbleBackground'
+import { ScenxialLogo } from '../../components/store/ScenxialLogo'
 import { LuxurySectionHeader } from '../../components/store/LuxurySectionHeader'
 import { toastError, toastSuccess, toastWarning } from '../../lib/alerts'
 import { useAuth } from '../../context/AuthContext'
@@ -184,8 +185,8 @@ export function AdminLoginPage() {
       <MarbleBackground />
       <div className="relative z-10 w-full max-w-md">
         <div className="mb-10 text-center">
-          <span className="luxury-title text-3xl tracking-[0.3em]">Permuferia</span>
-          <p className="luxury-eyebrow mt-4">Acceso de administrador</p>
+          <ScenxialLogo size="lg" asLink={false} />
+          <p className="luxury-eyebrow mt-6">Acceso de administrador</p>
         </div>
 
         <form onSubmit={handleSubmit} className="luxury-card space-y-5 p-6">

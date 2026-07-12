@@ -42,27 +42,27 @@ export function LuxuryPagination({
   return (
     <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
       {meta && (
-        <p className="font-body text-sm font-light text-[#B8AFA0]">
+        <p className="font-body text-sm font-extralight text-mist">
           {meta.total === 0 ? (
             'Sin resultados'
           ) : (
             <>
               Mostrando{' '}
-              <span className="text-amber-400/90">{meta.from ?? 0}</span>–
-              <span className="text-amber-400/90">{meta.to ?? 0}</span> de{' '}
-              <span className="text-amber-400/90">{meta.total}</span>
+              <span className="text-gold-400/90">{meta.from ?? 0}</span>–
+              <span className="text-gold-400/90">{meta.to ?? 0}</span> de{' '}
+              <span className="text-gold-400/90">{meta.total}</span>
             </>
           )}
         </p>
       )}
 
       {lastPage > 1 && (
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage <= 1}
-            className="rounded-sm border border-amber-500/20 p-2 text-[#B8AFA0] transition hover:border-amber-500/50 hover:text-amber-400 disabled:cursor-not-allowed disabled:opacity-30"
+            className="rounded-full border border-white/10 p-2.5 text-mist transition duration-300 hover:border-amber-500/30 hover:text-gold-300 disabled:opacity-30"
             aria-label="Página anterior"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -70,7 +70,7 @@ export function LuxuryPagination({
 
           {pages.map((p, i) =>
             p === 'ellipsis' ? (
-              <span key={`ellipsis-${i}`} className="px-2 text-[#B8AFA0]/40">
+              <span key={`ellipsis-${i}`} className="px-2 text-mist/30">
                 …
               </span>
             ) : (
@@ -78,10 +78,10 @@ export function LuxuryPagination({
                 key={p}
                 type="button"
                 onClick={() => onPageChange(p)}
-                className={`min-w-[2.25rem] rounded-sm border px-3 py-1.5 font-body text-sm font-light transition ${
+                className={`min-w-[2.5rem] rounded-full border px-3.5 py-2 font-body text-sm font-light transition duration-300 ${
                   p === currentPage
-                    ? 'border-amber-500/60 bg-gradient-to-br from-amber-600/30 to-amber-500/10 text-amber-300 shadow-[0_0_20px_rgba(212,175,55,0.15)]'
-                    : 'border-amber-500/15 text-[#B8AFA0] hover:border-amber-500/40 hover:text-amber-400'
+                    ? 'border-amber-500/30 bg-amber-500/10 text-gold-300 shadow-[0_0_24px_rgba(201,162,39,0.12)]'
+                    : 'border-white/[0.06] text-mist hover:border-amber-500/20 hover:text-champagne'
                 }`}
               >
                 {p}
@@ -93,7 +93,7 @@ export function LuxuryPagination({
             type="button"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage >= lastPage}
-            className="rounded-sm border border-amber-500/20 p-2 text-[#B8AFA0] transition hover:border-amber-500/50 hover:text-amber-400 disabled:cursor-not-allowed disabled:opacity-30"
+            className="rounded-full border border-white/10 p-2.5 text-mist transition duration-300 hover:border-amber-500/30 hover:text-gold-300 disabled:opacity-30"
             aria-label="Página siguiente"
           >
             <ChevronRight className="h-4 w-4" />

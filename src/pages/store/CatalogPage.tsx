@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Search } from 'lucide-react'
+import { SlidersHorizontal } from 'lucide-react'
+import { BoutiqueProductCard } from '../../components/catalog/BoutiqueProductCard'
+import { CatalogFilters } from '../../components/catalog/CatalogFilters'
+import { CatalogHero } from '../../components/catalog/CatalogHero'
 import { LuxuryPagination } from '../../components/catalog/LuxuryPagination'
-import { LuxuryProductCard } from '../../components/catalog/LuxuryProductCard'
-import { LuxurySectionHeader } from '../../components/store/LuxurySectionHeader'
-import { StorePageShell } from '../../components/store/StorePageShell'
-import { catalogApi } from '../../lib/api'
+import { ScrollReveal } from '../../components/catalog/ScrollReveal'
 import { useCart } from '../../context/CartContext'
+import { catalogApi } from '../../lib/api'
 import type { Brand, Category, Product } from '../../types'
 
 export function CatalogPage() {
-  const [searchParams, setSearchParams] = useSearchParams()
   const { addItem } = useCart()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
@@ -19,6 +20,7 @@ export function CatalogPage() {
   const [loading, setLoading] = useState(true)
   const [totalPages, setTotalPages] = useState(1)
   const [meta, setMeta] = useState({ from: null as number | null, to: null as number | null, total: 0 })
+  const [filtersOpen, setFiltersOpen] = useState(false)
 
   const category = searchParams.get('categoria') ?? ''
   const brand = searchParams.get('marca') ?? ''
@@ -58,94 +60,97 @@ export function CatalogPage() {
     setSearchParams(next)
   }
 
+  const activeFilters = [category, brand, search].filter(Boolean).length
+
   return (
-    <StorePageShell>
-      <LuxurySectionHeader
-        eyebrow="Colección Exclusiva"
-        title="Catálogo"
-        subtitle="Descubrí fragancias, esencias y piezas seleccionadas con la elegancia de una boutique de alta perfumería."
-      />
+    <div className="bg-carbon">
+      <CatalogHero />
 
-      <div className="luxury-filter-bar mb-10 flex flex-col gap-3 md:flex-row md:items-center">
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-amber-500/50" />
-          <input
-            type="search"
-            placeholder="Buscar fragancias..."
-            defaultValue={search}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') updateParam('q', (e.target as HTMLInputElement).value)
-            }}
-            className="luxury-input pl-11"
-          />
-        </div>
-        <select
-          value={category}
-          onChange={(e) => updateParam('categoria', e.target.value)}
-          className="luxury-input md:w-52"
-        >
-          <option value="">Todas las categorías</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.slug}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-        <select
-          value={brand}
-          onChange={(e) => updateParam('marca', e.target.value)}
-          className="luxury-input md:w-52"
-        >
-          <option value="">Todas las marcas</option>
-          {brands.map((b) => (
-            <option key={b.id} value={b.slug}>
-              {b.name}
-            </option>
-          ))}
-        </select>
-        <select
-          value={sort}
-          onChange={(e) => updateParam('orden', e.target.value)}
-          className="luxury-input md:w-52"
-        >
-          <option value="newest">Más recientes</option>
-          <option value="price_asc">Precio: menor a mayor</option>
-          <option value="price_desc">Precio: mayor a menor</option>
-          <option value="name">Nombre A-Z</option>
-        </select>
-      </div>
-
-      {loading ? (
-        <div className="flex flex-col items-center py-24">
-          <div className="gold-divider max-w-xs" />
-          <p className="luxury-body mt-8 text-sm tracking-widest">Cargando colección...</p>
-        </div>
-      ) : products.length === 0 ? (
-        <div className="flex flex-col items-center py-24">
-          <div className="gold-divider max-w-xs" />
-          <p className="luxury-body mt-8 text-sm">No se encontraron productos en esta selección.</p>
-        </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => (
-              <LuxuryProductCard key={product.id} product={product} onAddToCart={addItem} />
-            ))}
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:px-10 md:py-16">
+        <div className="mb-8 flex items-end justify-between border-b border-white/[0.06] pb-6 md:mb-10 md:pb-8">
+          <div>
+            <p className="font-body text-xs font-normal uppercase tracking-[0.35em] text-aged-gold">
+              Colección
+            </p>
+            <h2 className="mt-2 font-display text-2xl font-normal tracking-wide text-bone sm:text-3xl md:text-4xl">
+              Catálogo
+            </h2>
+            {!loading && meta.total > 0 && (
+              <p className="mt-2 font-body text-sm text-bone/60">
+                {meta.total} fragancia{meta.total !== 1 ? 's' : ''}
+              </p>
+            )}
           </div>
 
-          {totalPages > 1 && (
-            <div className="mt-14">
-              <div className="gold-divider mb-8" />
-              <LuxuryPagination
-                currentPage={page}
-                lastPage={totalPages}
-                onPageChange={(p) => updateParam('pagina', String(p))}
-                meta={meta}
-              />
-            </div>
-          )}
-        </>
-      )}
-    </StorePageShell>
+          <button
+            type="button"
+            onClick={() => setFiltersOpen(true)}
+            className="flex shrink-0 items-center gap-2 border border-white/10 px-3 py-2 font-body text-xs uppercase tracking-[0.2em] text-bone/80 transition-all duration-300 hover:border-aged-gold/30 hover:text-bone sm:px-4 sm:py-2.5 lg:hidden"
+          >
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+            Filtros
+            {activeFilters > 0 && (
+              <span className="text-aged-gold">({activeFilters})</span>
+            )}
+          </button>
+        </div>
+
+        <div className="flex gap-8 lg:gap-16">
+          <CatalogFilters
+            categories={categories}
+            brands={brands}
+            category={category}
+            brand={brand}
+            search={search}
+            sort={sort}
+            onCategoryChange={(v) => updateParam('categoria', v)}
+            onBrandChange={(v) => updateParam('marca', v)}
+            onSearch={(v) => updateParam('q', v)}
+            onSortChange={(v) => updateParam('orden', v)}
+            mobileOpen={filtersOpen}
+            onMobileClose={() => setFiltersOpen(false)}
+          />
+
+          <div className="min-w-0 flex-1">
+            {loading ? (
+              <div className="flex flex-col items-center py-20">
+                <div className="boutique-line max-w-[120px]" />
+                <p className="mt-6 font-body text-sm uppercase tracking-[0.3em] text-bone/50">
+                  Cargando colección...
+                </p>
+              </div>
+            ) : products.length === 0 ? (
+              <div className="flex flex-col items-center py-20">
+                <div className="boutique-line max-w-[120px]" />
+                <p className="mt-6 font-body text-sm text-bone/60">
+                  No hay fragancias en esta selección.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 sm:gap-y-14 xl:grid-cols-3">
+                  {products.map((product, i) => (
+                    <ScrollReveal key={product.id} delay={i * 60}>
+                      <BoutiqueProductCard product={product} onAddToCart={addItem} />
+                    </ScrollReveal>
+                  ))}
+                </div>
+
+                {totalPages > 1 && (
+                  <div className="mt-24 border-t border-white/[0.06] pt-12">
+                    <LuxuryPagination
+                      currentPage={page}
+                      lastPage={totalPages}
+                      onPageChange={(p) => updateParam('pagina', String(p))}
+                      meta={meta}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

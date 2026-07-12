@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from 'react'
 import { toastInfo, toastSuccess } from '../lib/alerts'
+import { CART_KEY } from '../lib/brand'
 import type { CartItem, Product } from '../types'
 
 interface CartContextValue {
@@ -19,8 +20,6 @@ interface CartContextValue {
   updateQuantity: (productId: number, quantity: number) => void
   clearCart: () => void
 }
-
-const CART_KEY = 'permuferia_cart'
 
 const CartContext = createContext<CartContextValue | null>(null)
 

@@ -58,9 +58,11 @@ export function AdminLayout() {
       <aside className="fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-noir-800 bg-noir-900">
         <div className="border-b border-noir-800 px-6 py-5">
           <Link to="/admin" className="font-display text-xl text-gold-400">
-            Permuferia
+            Scenxial
           </Link>
-          <p className="mt-1 text-xs text-stone-500">Panel de administración</p>
+          <p className="mt-0.5 font-body text-[9px] font-light uppercase tracking-[0.4em] text-stone-600">
+            Perfums · Admin
+          </p>
         </div>
 
         <nav className="flex-1 space-y-6 overflow-y-auto p-4">

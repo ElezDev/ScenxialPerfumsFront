@@ -1,162 +1,167 @@
 @import "tailwindcss";
 
 @theme {
-  --color-noir-950: #050506;
-  --color-noir-900: #0c0c0e;
-  --color-noir-800: #151518;
+  --color-carbon: #0a0a0a;
+  --color-graphite: #141414;
+  --color-aged-gold: #c9a961;
+  --color-bone: #f5f2ed;
+  --color-obsidian: #0a0a0a;
+  --color-void: #141414;
+  --color-noir-950: #0a0a0a;
+  --color-noir-900: #141414;
+  --color-noir-800: #1a1a1a;
   --color-noir-700: #222228;
   --color-noir-600: #323238;
-  --color-gold-300: #f0d78c;
-  --color-gold-400: #e4c06b;
-  --color-gold-500: #d4af37;
-  --color-gold-600: #b8922e;
-  --color-gold-700: #9a7824;
-  --color-champagne: #B8AFA0;
-  --color-ivory: #F5F0E8;
-  --color-luxury-black: #0A0A0A;
-  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
-  --font-body: "Montserrat", system-ui, sans-serif;
+  --color-gold-300: #e8d5a3;
+  --color-gold-400: #d4b85a;
+  --color-gold-500: #c9a961;
+  --color-gold-600: #a8861f;
+  --color-gold-700: #8a6f1a;
+  --color-champagne: #a8a29e;
+  --color-mist: #8a8580;
+  --color-ivory: #f5f2ed;
+  --color-pearl: #f5f2ed;
+  --color-luxury-black: #0a0a0a;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
 }
 
 @layer base {
-  * { @apply border-noir-700; }
-  body { @apply bg-luxury-black text-champagne font-body font-light antialiased; margin: 0; }
-  h1, h2, h3 { @apply font-display text-ivory font-medium tracking-tight; }
+  * { @apply border-white/5; }
+  body {
+    @apply bg-carbon text-champagne font-body font-light antialiased;
+    margin: 0;
+  }
+  h1, h2, h3 { @apply font-display text-bone font-normal; }
 }
 
 @layer components {
+  /* ── Buttons ── */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm px-5 py-2.5 font-body text-xs font-medium uppercase tracking-wider text-black transition disabled:opacity-50;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 40%, #FFD700 60%, #D4AF37 100%);
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    @apply relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full px-8 py-3 font-body text-[11px] font-medium uppercase tracking-[0.2em] text-obsidian transition duration-500 disabled:opacity-40;
+    background: linear-gradient(135deg, #8a6f1a 0%, #c9a227 35%, #e8d5a3 55%, #c9a227 100%);
+    box-shadow: 0 4px 24px rgba(201, 162, 39, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
   .btn-primary::after {
     content: '';
-    @apply absolute inset-0 -translate-x-full;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-    transition: transform 0.6s ease;
+    @apply absolute inset-0 -translate-x-full skew-x-12;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .btn-primary:hover::after { transform: translateX(100%); }
-  .btn-primary:hover { box-shadow: 0 6px 30px rgba(212, 175, 55, 0.45); }
+  .btn-primary:hover::after { transform: translateX(200%); }
+  .btn-primary:hover {
+    box-shadow: 0 8px 40px rgba(201, 162, 39, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-amber-500/30 bg-black/40 px-5 py-2.5 font-body text-xs font-light uppercase tracking-wider text-ivory backdrop-blur-sm transition hover:border-amber-500/60 hover:text-amber-300;
-  }
-  .input-field {
-    @apply w-full rounded-sm border border-amber-500/25 bg-black/50 px-4 py-3 font-body text-sm font-light text-ivory backdrop-blur-sm outline-none transition placeholder:text-champagne/40 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20;
-  }
-  .input-field:focus {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.08);
-  }
-  .card {
-    @apply rounded-sm border border-amber-500/15 bg-gradient-to-br from-black/80 via-[#0d0d0d]/90 to-black/80 backdrop-blur-sm;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-7 py-3 font-body text-[11px] font-light uppercase tracking-[0.18em] text-pearl backdrop-blur-xl transition duration-300 hover:border-amber-500/30 hover:bg-white/[0.06] hover:text-gold-300;
   }
 
+  /* ── Forms ── */
+  .input-field {
+    @apply w-full rounded-2xl border border-white/[0.08] bg-white/[0.03] px-5 py-3.5 font-body text-sm font-light text-pearl backdrop-blur-xl outline-none transition duration-300 placeholder:text-mist/50 focus:border-amber-500/30 focus:bg-white/[0.05] focus:ring-2 focus:ring-amber-500/10;
+  }
+
+  .card {
+    @apply rounded-[1.75rem] border border-white/[0.06] bg-gradient-to-br from-white/[0.04] via-void/80 to-obsidian/90 shadow-[0_8px_40px_rgba(0,0,0,0.5)] backdrop-blur-2xl;
+  }
+
+  /* ── Typography ── */
   .luxury-eyebrow {
-    @apply font-body text-[10px] font-light uppercase tracking-[0.45em] text-amber-500/70;
+    @apply font-body text-[10px] font-extralight uppercase tracking-[0.55em] text-gold-500/60;
   }
   .luxury-heading {
-    @apply font-display font-medium uppercase tracking-[0.2em] text-ivory;
+    @apply font-display font-medium uppercase tracking-[0.15em] text-pearl;
   }
   .luxury-body {
-    @apply font-body font-light text-champagne;
+    @apply font-body font-extralight leading-relaxed text-champagne;
   }
   .luxury-label {
-    @apply mb-2 block font-body text-xs font-light uppercase tracking-wider text-champagne/80;
+    @apply mb-2.5 block font-body text-[10px] font-light uppercase tracking-[0.3em] text-mist/80;
   }
 
-  .whatsapp-fab {
-    @apply fixed bottom-6 right-6 z-50 flex items-center gap-3 overflow-hidden rounded-full border border-gold-500/50 bg-gradient-to-br from-noir-900 via-noir-950 to-black py-2 pl-4 pr-2 shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_24px_rgba(212,175,55,0.2)] transition-all duration-300 hover:border-gold-400/80 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6),0_0_36px_rgba(212,175,55,0.35)];
-  }
-
-  .whatsapp-fab-glow {
-    @apply pointer-events-none absolute inset-0 rounded-full;
-    background: radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.15), transparent 70%);
-    animation: whatsapp-pulse 2.5s ease-in-out infinite;
-  }
-
-  .whatsapp-fab-label {
-    @apply relative hidden text-right sm:block;
-  }
-
-  .whatsapp-fab-icon {
-    @apply relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-[0_4px_16px_rgba(37,211,102,0.4)] ring-2 ring-gold-500/40 transition group-hover:scale-105 group-hover:ring-gold-400/70;
-  }
-
-  /* ── Luxury Catalog ── */
-
-  .marble-texture {
-    background-color: #0A0A0A;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(180, 170, 155, 0.04) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 75% 25%, rgba(212, 175, 55, 0.03) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 60% at 50% 80%, rgba(140, 135, 125, 0.05) 0%, transparent 50%),
-      radial-gradient(ellipse 40% 30% at 85% 70%, rgba(212, 175, 55, 0.025) 0%, transparent 45%),
-      linear-gradient(135deg, rgba(30, 28, 26, 0.3) 0%, transparent 40%, rgba(20, 18, 16, 0.2) 100%);
-  }
-
-  .gold-particle {
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.6) 0%, rgba(212, 175, 55, 0) 70%);
-    opacity: 0;
-    animation: particle-float 6s ease-in-out infinite;
+  .scenxial-wordmark {
+    @apply uppercase text-transparent;
+    background: linear-gradient(160deg, #c9a961 0%, #f0e0b0 40%, #c9a961 70%, #a8861f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(201, 169, 97, 0.25));
   }
 
   .luxury-title {
-    @apply font-display font-medium uppercase tracking-[0.35em] text-transparent;
-    background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 40%, #D4AF37 70%, #B8860B 100%);
+    @apply font-display font-medium uppercase tracking-[0.2em] text-transparent;
+    background: linear-gradient(160deg, #c9a227 0%, #f0e0b0 45%, #c9a227 100%);
     -webkit-background-clip: text;
     background-clip: text;
-    filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.25));
+    filter: drop-shadow(0 0 50px rgba(201, 162, 39, 0.15));
   }
 
   .gold-divider {
     @apply h-px w-full;
-    background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.6) 50%, transparent 100%);
-  }
-
-  .luxury-input {
-    @apply w-full rounded-sm border border-amber-500/25 bg-black/50 px-4 py-3 font-body text-sm font-light text-[#F5F0E8] backdrop-blur-sm outline-none transition placeholder:text-[#B8AFA0]/40;
-  }
-  .luxury-input:focus {
-    @apply border-amber-500/50 ring-1 ring-amber-500/20;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.08);
-  }
-
-  .luxury-filter-bar {
-    @apply rounded-sm border border-amber-500/15 bg-black/40 p-4 backdrop-blur-md;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(212, 175, 55, 0.05);
-  }
-
-  .luxury-card {
-    @apply relative overflow-hidden rounded-sm border border-amber-500/20 bg-gradient-to-br from-black via-[#0d0d0d] to-black transition duration-500;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  }
-  .luxury-card::before {
-    content: '';
-    @apply pointer-events-none absolute inset-0 opacity-0 transition duration-500;
-    background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
-  }
-  .luxury-card:hover {
-    border-color: rgba(212, 175, 55, 0.45);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.12);
-  }
-  .luxury-card:hover::before {
-    opacity: 1;
+    background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.15) 20%, rgba(201, 162, 39, 0.5) 50%, rgba(201, 162, 39, 0.15) 80%, transparent);
   }
 
   .luxury-price {
     @apply font-display font-semibold text-transparent;
-    background: linear-gradient(135deg, #D4AF37, #F4E5C2, #FFD700);
+    background: linear-gradient(135deg, #c9a227, #f0e0b0, #e8d5a3);
     -webkit-background-clip: text;
     background-clip: text;
-    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.3));
+    filter: drop-shadow(0 0 16px rgba(201, 162, 39, 0.25));
   }
 
+  /* ── Surfaces ── */
+  .obsidian-canvas {
+    background-color: #030305;
+    background-image:
+      radial-gradient(ellipse 100% 60% at 10% 20%, rgba(60, 50, 80, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 50% at 90% 10%, rgba(201, 162, 39, 0.03) 0%, transparent 45%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(30, 28, 35, 0.08) 0%, transparent 50%);
+  }
+
+  .organic-blob {
+    animation: blob-drift 20s ease-in-out infinite;
+  }
+
+  .gold-particle {
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.5) 0%, transparent 70%);
+    opacity: 0;
+    animation: particle-float 8s ease-in-out infinite;
+  }
+
+  .glass-nav {
+    @apply rounded-full border border-white/[0.06] bg-black/30 shadow-[0_8px_40px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-2xl ring-1 ring-amber-500/[0.08];
+  }
+
+  .luxury-input {
+    @apply w-full rounded-2xl border border-white/[0.08] bg-white/[0.03] px-5 py-3.5 font-body text-sm font-light text-pearl backdrop-blur-xl outline-none transition duration-300 placeholder:text-mist/40 focus:border-amber-500/25 focus:ring-2 focus:ring-amber-500/10;
+  }
+
+  .luxury-filter-bar {
+    @apply rounded-[2rem] border border-white/[0.06] bg-white/[0.02] p-5 shadow-[0_8px_40px_rgba(0,0,0,0.4)] backdrop-blur-2xl;
+  }
+
+  .luxury-card {
+    @apply relative overflow-hidden rounded-[1.75rem] border border-white/[0.07] bg-gradient-to-b from-white/[0.05] via-void/60 to-obsidian transition duration-700 ease-out;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  .luxury-card::before {
+    content: '';
+    @apply pointer-events-none absolute inset-0 opacity-0 transition duration-700;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201, 162, 39, 0.06) 0%, transparent 65%);
+    border-radius: inherit;
+  }
+  .luxury-card:hover {
+    @apply border-amber-500/20;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 40px rgba(201, 162, 39, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-4px);
+  }
+  .luxury-card:hover::before { opacity: 1; }
+
   .btn-gold-shine {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm px-5 py-2.5 font-body text-xs font-medium uppercase tracking-wider text-black transition;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 40%, #FFD700 60%, #D4AF37 100%);
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3 font-body text-[10px] font-medium uppercase tracking-[0.2em] text-obsidian transition duration-500;
+    background: linear-gradient(135deg, #8a6f1a 0%, #c9a227 40%, #e8d5a3 60%, #c9a227 100%);
+    box-shadow: 0 4px 24px rgba(201, 162, 39, 0.25);
   }
   .btn-gold-shine::after {
     content: '';
@@ -164,148 +169,179 @@
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
     transition: transform 0.6s ease;
   }
-  .btn-gold-shine:hover::after {
-    transform: translateX(100%);
-  }
-  .btn-gold-shine:hover {
-    box-shadow: 0 6px 30px rgba(212, 175, 55, 0.45);
-  }
+  .btn-gold-shine:hover::after { transform: translateX(100%); }
+  .btn-gold-shine:hover { box-shadow: 0 8px 32px rgba(201, 162, 39, 0.4); }
 
   .btn-whatsapp-gold {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm border border-amber-500/40 bg-[#25D366]/10 px-5 py-2.5 font-body text-xs font-medium uppercase tracking-wider text-[#3ddb7a] backdrop-blur-sm transition;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-emerald-500/20 bg-emerald-500/[0.06] px-6 py-3 font-body text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-400/90 backdrop-blur-xl transition duration-300;
   }
   .btn-whatsapp-gold:hover {
-    @apply border-amber-500/70 bg-[#25D366]/20 text-[#4ade80];
-    box-shadow: 0 0 20px rgba(37, 211, 102, 0.15), 0 0 12px rgba(212, 175, 55, 0.1);
+    @apply border-amber-500/30 bg-emerald-500/10 text-emerald-300;
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.1), 0 0 20px rgba(201, 162, 39, 0.08);
   }
+
+  .hero-curve {
+    border-radius: 0 0 50% 50% / 0 0 3rem 3rem;
+  }
+
+  .category-pill {
+    @apply rounded-[2rem] border border-white/[0.06] bg-white/[0.02] p-6 text-center backdrop-blur-xl transition duration-500 hover:border-amber-500/20 hover:bg-white/[0.04] hover:shadow-[0_0_30px_rgba(201,162,39,0.06)];
+  }
+
+  /* ── WhatsApp FAB ── */
+  .whatsapp-fab {
+    @apply fixed bottom-4 right-4 z-50 flex items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-black/50 py-2 pl-3 pr-2 shadow-[0_8px_32px_rgba(0,0,0,0.6)] backdrop-blur-2xl transition-all duration-500 hover:border-aged-gold/30 sm:bottom-6 sm:right-6 sm:gap-3 sm:py-2.5 sm:pl-5 sm:pr-2.5;
+  }
+  .whatsapp-fab-glow {
+    @apply pointer-events-none absolute inset-0 rounded-full;
+    background: radial-gradient(circle at 80% 50%, rgba(201, 162, 39, 0.1), transparent 70%);
+    animation: whatsapp-pulse 3s ease-in-out infinite;
+  }
+  .whatsapp-fab-label { @apply relative hidden text-right sm:block; }
+  .whatsapp-fab-icon {
+    @apply relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-[0_4px_16px_rgba(37,211,102,0.35)] ring-1 ring-aged-gold/20 transition duration-300 group-hover:scale-105 sm:h-12 sm:w-12 sm:ring-2;
+  }
+
+  /* ── Boutique catalog (Scenxial Perfums) ── */
+  .boutique-line {
+    @apply h-px w-full;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.35) 50%, transparent);
+  }
+
+  .boutique-filter-label {
+    @apply mb-3 font-body text-xs font-normal uppercase tracking-[0.3em] text-aged-gold;
+  }
+
+  .boutique-search-input {
+    @apply w-full border-0 border-b border-white/10 bg-transparent py-3 font-body text-sm font-light text-bone outline-none transition-all duration-300 placeholder:text-champagne/30 focus:border-aged-gold/50;
+  }
+
+  .boutique-product-card {
+    @apply relative flex flex-col;
+  }
+
+  .boutique-product-image-wrap {
+    @apply relative aspect-[3/4] overflow-hidden bg-graphite transition-transform duration-[600ms] ease-out group-hover:-translate-y-2;
+  }
+
+  .boutique-product-image {
+    @apply h-full w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-105;
+  }
+
+  .boutique-badge {
+    @apply absolute left-0 top-0 z-10 border border-aged-gold/40 bg-carbon/90 px-3 py-1.5 font-body text-[10px] uppercase tracking-[0.25em] text-aged-gold backdrop-blur-sm;
+  }
+
+  .boutique-cta-outline {
+    @apply inline-flex items-center justify-center border border-aged-gold/60 bg-transparent px-8 py-3 font-body text-[10px] uppercase tracking-[0.3em] text-aged-gold transition-all duration-300 hover:bg-aged-gold hover:text-carbon;
+  }
+
+  .boutique-cta-solid {
+    @apply inline-flex items-center justify-center bg-aged-gold px-8 py-3.5 font-body text-[10px] uppercase tracking-[0.3em] text-carbon transition-all duration-300 hover:bg-transparent hover:text-aged-gold hover:ring-1 hover:ring-aged-gold;
+  }
+
+  .boutique-cta-whatsapp {
+    @apply inline-flex items-center justify-center border border-emerald-500/35 bg-emerald-500/10 px-4 py-3 font-body text-[10px] uppercase tracking-[0.2em] text-emerald-400 transition-all duration-300 hover:border-emerald-400/50 hover:bg-emerald-500/20 hover:text-emerald-300;
+  }
+
+  .boutique-quick-wa {
+    @apply flex h-10 w-10 items-center justify-center border border-emerald-500/35 bg-carbon/85 text-emerald-400 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-emerald-400/50 hover:bg-emerald-500/15 hover:text-emerald-300 sm:h-11 sm:w-11;
+  }
+
+  .boutique-newsletter-input {
+    @apply w-full border-0 border-b border-aged-gold/30 bg-transparent py-3 font-body text-sm font-light text-bone outline-none transition-all duration-300 placeholder:text-champagne/30 focus:border-aged-gold;
+  }
+
+  .scroll-reveal {
+    @apply opacity-0 translate-y-6 transition-all duration-700 ease-out;
+  }
+
+  .scroll-reveal.is-visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .boutique-carousel-track {
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .boutique-carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .boutique-promo-card {
+    @apply relative h-[220px] overflow-hidden border border-white/[0.06] bg-graphite sm:h-[240px];
+  }
+
+  .boutique-category-pill {
+    @apply block border border-white/[0.06] bg-graphite/40 px-5 py-6 text-center transition-all duration-300 hover:border-aged-gold/30 hover:bg-graphite;
+  }
+}
+
+@keyframes carousel-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(2%, -3%) scale(1.05); }
+  66% { transform: translate(-2%, 2%) scale(0.95); }
 }
 
 @keyframes whatsapp-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.02); }
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 @keyframes particle-float {
-  0%, 100% { opacity: 0; transform: translateY(0) scale(1); }
-  20% { opacity: 0.5; }
-  50% { opacity: 0.3; transform: translateY(-12px) scale(1.2); }
-  80% { opacity: 0.1; }
+  0%, 100% { opacity: 0; transform: translateY(0); }
+  25% { opacity: 0.4; }
+  50% { opacity: 0.2; transform: translateY(-16px); }
+  75% { opacity: 0.05; }
 }
 
-/* ── SweetAlert2 Luxury Theme ── */
-
+/* ── SweetAlert2 ── */
 .swal-luxury-toast {
-  background: linear-gradient(135deg, #0c0c0e 0%, #151518 100%) !important;
-  border: 1px solid rgba(212, 175, 55, 0.35) !important;
-  border-radius: 4px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.1) !important;
-  padding: 0.85rem 1.25rem !important;
+  background: linear-gradient(135deg, #08080c 0%, #121218 100%) !important;
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7) !important;
+  padding: 1rem 1.5rem !important;
 }
-
-.swal-luxury-toast-title {
-  font-family: "Montserrat", system-ui, sans-serif !important;
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  color: #F5F0E8 !important;
-}
-
-.swal-luxury-toast-text {
-  font-family: "Montserrat", system-ui, sans-serif !important;
-  font-size: 0.75rem !important;
-  font-weight: 300 !important;
-  color: #B8AFA0 !important;
-}
-
-.swal-luxury-timer {
-  background: linear-gradient(90deg, #B8860B, #FFD700) !important;
-}
-
+.swal-luxury-toast-title { font-family: "Inter", sans-serif !important; font-size: 0.875rem !important; font-weight: 400 !important; color: #f5f2ed !important; }
+.swal-luxury-toast-text { font-family: "Inter", sans-serif !important; font-size: 0.75rem !important; font-weight: 300 !important; color: #a8a29e !important; }
+.swal-luxury-timer { background: linear-gradient(90deg, #8a6f1a, #c9a961) !important; }
 .swal-luxury-popup {
-  background: linear-gradient(160deg, #0A0A0A 0%, #151518 50%, #0c0c0e 100%) !important;
-  border: 1px solid rgba(212, 175, 55, 0.35) !important;
-  border-radius: 6px !important;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 40px rgba(212, 175, 55, 0.08) !important;
-  padding: 2rem 1.5rem !important;
+  background: linear-gradient(160deg, #0a0a0a 0%, #141414 50%, #0a0a0a 100%) !important;
+  border: 1px solid rgba(201, 169, 97, 0.2) !important;
+  border-radius: 2rem !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8) !important;
 }
-
-.swal-luxury-title {
-  font-family: "Cormorant Garamond", Georgia, serif !important;
-  font-size: 1.5rem !important;
-  font-weight: 500 !important;
-  color: #F5F0E8 !important;
-  letter-spacing: 0.05em !important;
-}
-
-.swal-luxury-text {
-  font-family: "Montserrat", system-ui, sans-serif !important;
-  font-size: 0.875rem !important;
-  font-weight: 300 !important;
-  color: #B8AFA0 !important;
-  line-height: 1.6 !important;
-}
-
+.swal-luxury-title { font-family: "Playfair Display", serif !important; font-size: 1.5rem !important; color: #f5f2ed !important; }
+.swal-luxury-text { font-family: "Inter", sans-serif !important; font-size: 0.875rem !important; color: #a8a29e !important; }
 .swal-luxury-confirm {
-  font-family: "Montserrat", system-ui, sans-serif !important;
-  font-size: 0.8rem !important;
-  font-weight: 500 !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.75rem !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.08em !important;
-  color: #0A0A0A !important;
-  background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #FFD700 100%) !important;
+  letter-spacing: 0.15em !important;
+  color: #030305 !important;
+  background: linear-gradient(135deg, #8a6f1a, #c9a227, #e8d5a3) !important;
   border: none !important;
-  border-radius: 3px !important;
-  padding: 0.65rem 1.5rem !important;
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3) !important;
+  border-radius: 9999px !important;
+  padding: 0.75rem 2rem !important;
 }
-
-.swal-luxury-confirm:hover {
-  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #F4E5C2 100%) !important;
-}
-
 .swal-luxury-cancel {
-  font-family: "Montserrat", system-ui, sans-serif !important;
-  font-size: 0.8rem !important;
-  font-weight: 400 !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 0.75rem !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.06em !important;
-  color: #B8AFA0 !important;
+  letter-spacing: 0.1em !important;
+  color: #a39e98 !important;
   background: transparent !important;
-  border: 1px solid rgba(212, 175, 55, 0.25) !important;
-  border-radius: 3px !important;
-  padding: 0.65rem 1.5rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 9999px !important;
 }
-
-.swal-luxury-cancel:hover {
-  border-color: rgba(212, 175, 55, 0.5) !important;
-  color: #F5F0E8 !important;
-}
-
-.swal-luxury-icon {
-  border-color: rgba(212, 175, 55, 0.4) !important;
-  color: #D4AF37 !important;
-}
-
-div:where(.swal2-icon).swal2-success {
-  border-color: rgba(212, 175, 55, 0.5) !important;
-}
-div:where(.swal2-icon).swal2-success [class^='swal2-success-line'] {
-  background-color: #D4AF37 !important;
-}
-div:where(.swal2-icon).swal2-success .swal2-success-ring {
-  border-color: rgba(212, 175, 55, 0.3) !important;
-}
-
-div:where(.swal2-icon).swal2-error {
-  border-color: rgba(239, 68, 68, 0.5) !important;
-  color: #ef4444 !important;
-}
-
-div:where(.swal2-icon).swal2-warning {
-  border-color: rgba(212, 175, 55, 0.5) !important;
-  color: #D4AF37 !important;
-}
-
-div:where(.swal2-icon).swal2-info {
-  border-color: rgba(212, 175, 55, 0.4) !important;
-  color: #D4AF37 !important;
-}
+div:where(.swal2-icon).swal2-success { border-color: rgba(201, 162, 39, 0.4) !important; }
+div:where(.swal2-icon).swal2-success [class^='swal2-success-line'] { background-color: #c9a227 !important; }
+div:where(.swal2-icon).swal2-warning { border-color: rgba(201, 162, 39, 0.4) !important; color: #c9a227 !important; }
+div:where(.swal2-icon).swal2-error { border-color: rgba(239, 68, 68, 0.4) !important; }

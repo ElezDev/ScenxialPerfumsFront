@@ -19,10 +19,10 @@ export function WhatsAppButton() {
     >
       <span className="whatsapp-fab-glow" aria-hidden="true" />
       <span className="whatsapp-fab-label">
-        <span className="block font-body text-[10px] font-light uppercase tracking-[0.2em] text-amber-400/80">
+        <span className="hidden font-body text-[10px] font-normal uppercase tracking-[0.15em] text-aged-gold sm:block">
           Atención personalizada
         </span>
-        <span className="block font-body text-sm font-light text-ivory">Comprá por WhatsApp</span>
+        <span className="hidden font-body text-sm text-bone sm:block">Comprá por WhatsApp</span>
       </span>
       <span className="whatsapp-fab-icon">
         <WhatsAppIcon className="h-6 w-6" />
