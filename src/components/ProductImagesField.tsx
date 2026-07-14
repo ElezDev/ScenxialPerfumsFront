@@ -21,14 +21,18 @@ const emptySlot = (index: number): ProductImageInput => ({
 export function ProductImagesField({
   value,
   onChange,
-  maxImages = 2,
+  maxImages = 6,
 }: ProductImagesFieldProps) {
   const slots = Array.from({ length: maxImages }, (_, index) => value[index] ?? emptySlot(index))
 
   function updateSlot(index: number, path: string) {
     const next = [...slots]
-    next[index] = { ...next[index], path, sort_order: index, is_primary: index === 0 }
-    onChange(next.filter((img) => img.path))
+    next[index] = { ...next[index], path, sort_order: index }
+    const filtered = next.filter((img) => img.path)
+    if (filtered.length && !filtered.some((img) => img.is_primary)) {
+      filtered[0].is_primary = true
+    }
+    onChange(filtered)
   }
 
   function setPrimary(index: number) {
@@ -44,7 +48,7 @@ export function ProductImagesField({
       <label className="mb-2 block text-sm text-stone-400">
         Imágenes del producto (máx. {maxImages})
       </label>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {slots.map((slot, index) => (
           <div key={index} className="rounded-lg border border-noir-700 p-4">
             <div className="mb-3 flex items-center justify-between">
