@@ -69,6 +69,16 @@ export interface ProductImage {
   sort_order: number
 }
 
+export interface Decant {
+  id: number
+  product_id: number
+  ml: number
+  price: number
+  stock: number
+  is_active: boolean
+  sort_order: number
+}
+
 export interface Product {
   id: number
   name: string
@@ -85,17 +95,22 @@ export interface Product {
   category?: Category
   brand?: Brand | null
   images?: ProductImage[]
+  decants?: Decant[]
   created_at: string
 }
 
 export interface CartItem {
   product: Product
   quantity: number
+  decant?: Decant | null
 }
 
 export interface OrderItem {
   id: number
   product_id: number
+  decant_id?: number | null
+  decant_ml?: number | null
+  is_decant?: boolean
   product_name: string
   product_sku: string
   quantity: number
@@ -105,6 +120,7 @@ export interface OrderItem {
 
 export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
 export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'refunded'
+export type PaymentMethod = 'mercadopago' | 'cash_on_delivery'
 
 export interface Order {
   id: number
@@ -112,6 +128,8 @@ export interface Order {
   status: OrderStatus
   payment_status: PaymentStatus
   payment_method: string
+  payment_method_label?: string
+  is_cash_on_delivery?: boolean
   subtotal: number
   shipping_cost: number
   total: number
@@ -165,7 +183,8 @@ export interface DashboardStats {
 }
 
 export interface CreateOrderPayload {
-  items: { product_id: number; quantity: number }[]
+  items: { product_id: number; decant_id?: number; quantity: number }[]
+  payment_method?: PaymentMethod
   customer_name: string
   customer_email: string
   customer_phone?: string
@@ -184,5 +203,5 @@ export interface CreateOrderResponse {
     preference_id: string
     init_point: string
     sandbox_init_point?: string
-  }
+  } | null
 }

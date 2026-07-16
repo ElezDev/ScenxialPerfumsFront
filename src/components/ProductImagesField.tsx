@@ -21,7 +21,7 @@ const emptySlot = (index: number): ProductImageInput => ({
 export function ProductImagesField({
   value,
   onChange,
-  maxImages = 6,
+  maxImages = 10,
 }: ProductImagesFieldProps) {
   const slots = Array.from({ length: maxImages }, (_, index) => value[index] ?? emptySlot(index))
 

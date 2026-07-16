@@ -91,7 +91,7 @@ export function HomePage() {
                 Destacados
               </h2>
               <p className="mt-2 font-body text-sm text-bone/60">
-                Agregá al carrito con un solo clic
+                Agrega al carrito con un solo clic
               </p>
             </div>
             <Link
@@ -145,12 +145,12 @@ export function HomePage() {
                 Asesoramiento exclusivo
               </h2>
               <p className="mt-3 font-body text-sm leading-relaxed text-bone/65">
-                {BRAND.motto}. Descubrí tu perfil olfativo o consultá con nuestros expertos.
+                {BRAND.motto}. Descubre tu perfil olfativo o consulta con nuestros expertos.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link to="/asesoria" className="boutique-cta-solid inline-flex shrink-0 items-center justify-center gap-2">
-                Descubrí tu perfil
+                Descubre tu perfil
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <a

@@ -211,7 +211,7 @@ export function BannersPage() {
         onPageChange={setPage}
         meta={meta}
         isEmpty={bannersPage.length === 0}
-        emptyMessage="No hay banners. Creá el primero para el home."
+        emptyMessage="No hay banners. Crea el primero para el home."
       >
         <table className="w-full text-sm">
           <thead>

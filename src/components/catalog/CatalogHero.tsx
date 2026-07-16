@@ -60,7 +60,7 @@ export function CatalogHero() {
           </p>
 
           <p className="mx-auto mt-4 max-w-sm font-body text-sm font-normal leading-relaxed text-bone/75 sm:text-base md:mx-0 md:mt-5 md:max-w-md">
-            Una selección curada de fragancias que hablan antes que vos.
+            Una selección curada de fragancias que hablan antes que tú.
             Silencio, presencia, memoria.
           </p>
         </div>

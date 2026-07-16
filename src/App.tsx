@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
@@ -11,14 +12,39 @@ import { ProductPage } from './pages/store/ProductPage'
 import { CartPage } from './pages/store/CartPage'
 import { CheckoutPage, CheckoutResultPage } from './pages/store/CheckoutPage'
 import { LoginPage, RegisterPage, AdminLoginPage } from './pages/store/AuthPages'
-import { DashboardPage } from './pages/admin/DashboardPage'
-import { ProductsPage } from './pages/admin/ProductsPage'
-import { CategoriesPage } from './pages/admin/CategoriesPage'
-import { BrandsPage } from './pages/admin/BrandsPage'
-import { BannersPage } from './pages/admin/BannersPage'
-import { PromosPage } from './pages/admin/PromosPage'
-import { OrdersPage } from './pages/admin/OrdersPage'
-import { UsersPage } from './pages/admin/UsersPage'
+
+const DashboardPage = lazy(() =>
+  import('./pages/admin/DashboardPage').then((m) => ({ default: m.DashboardPage })),
+)
+const ProductsPage = lazy(() =>
+  import('./pages/admin/ProductsPage').then((m) => ({ default: m.ProductsPage })),
+)
+const CategoriesPage = lazy(() =>
+  import('./pages/admin/CategoriesPage').then((m) => ({ default: m.CategoriesPage })),
+)
+const BrandsPage = lazy(() =>
+  import('./pages/admin/BrandsPage').then((m) => ({ default: m.BrandsPage })),
+)
+const BannersPage = lazy(() =>
+  import('./pages/admin/BannersPage').then((m) => ({ default: m.BannersPage })),
+)
+const PromosPage = lazy(() =>
+  import('./pages/admin/PromosPage').then((m) => ({ default: m.PromosPage })),
+)
+const OrdersPage = lazy(() =>
+  import('./pages/admin/OrdersPage').then((m) => ({ default: m.OrdersPage })),
+)
+const UsersPage = lazy(() =>
+  import('./pages/admin/UsersPage').then((m) => ({ default: m.UsersPage })),
+)
+
+function AdminFallback() {
+  return (
+    <div className="flex min-h-[50vh] items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold-500/30 border-t-gold-500" />
+    </div>
+  )
+}
 
 export default function App() {
   return (
@@ -41,7 +67,14 @@ export default function App() {
             </Route>
 
             <Route element={<AdminRoute />}>
-              <Route path="/admin" element={<AdminLayout />}>
+              <Route
+                path="/admin"
+                element={
+                  <Suspense fallback={<AdminFallback />}>
+                    <AdminLayout />
+                  </Suspense>
+                }
+              >
                 <Route index element={<DashboardPage />} />
                 <Route path="productos" element={<ProductsPage />} />
                 <Route path="categorias" element={<CategoriesPage />} />

@@ -21,6 +21,8 @@ export function LuxuryProductCard({ product, onAddToCart }: LuxuryProductCardPro
               <img
                 src={imageUrl}
                 alt={product.name}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover transition duration-[1.2s] ease-out group-hover:scale-[1.06]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent opacity-80 transition duration-700 group-hover:opacity-90" />

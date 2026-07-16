@@ -15,6 +15,12 @@ const orderStatuses: OrderStatus[] = [
   'cancelled',
 ]
 
+const paymentStatuses = ['pending', 'paid', 'failed', 'refunded'] as const
+
+function paymentMethodLabel(order: Order) {
+  return order.payment_method_label ?? (order.payment_method === 'cash_on_delivery' ? 'Contra entrega' : 'Mercado Pago')
+}
+
 export function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
@@ -61,6 +67,12 @@ export function OrdersPage() {
     load()
   }
 
+  async function updatePaymentStatus(order: Order, paymentStatus: string) {
+    await adminApi.updateOrderStatus(order.id, { status: order.status, payment_status: paymentStatus })
+    toastSuccess('Estado de pago actualizado', statusLabel(paymentStatus))
+    load()
+  }
+
   return (
     <div>
       <div className="mb-8">
@@ -100,6 +112,7 @@ export function OrdersPage() {
               <th className="px-6 py-3">Cliente</th>
               <th className="px-6 py-3">Total</th>
               <th className="px-6 py-3">Estado</th>
+              <th className="px-6 py-3">Método de pago</th>
               <th className="px-6 py-3">Pago</th>
               <th className="px-6 py-3">Fecha</th>
               <th className="px-6 py-3">Acciones</th>
@@ -115,22 +128,46 @@ export function OrdersPage() {
                 </td>
                 <td className="px-6 py-3">{formatPrice(order.total)}</td>
                 <td className="px-6 py-3">{statusLabel(order.status)}</td>
+                <td className="px-6 py-3">
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-xs ${
+                      order.payment_method === 'cash_on_delivery'
+                        ? 'bg-amber-500/10 text-amber-400'
+                        : 'bg-sky-500/10 text-sky-400'
+                    }`}
+                  >
+                    {paymentMethodLabel(order)}
+                  </span>
+                </td>
                 <td className="px-6 py-3">{statusLabel(order.payment_status)}</td>
                 <td className="px-6 py-3 text-stone-500">
                   {new Date(order.created_at).toLocaleDateString('es-AR')}
                 </td>
                 <td className="px-6 py-3">
-                  <select
-                    value={order.status}
-                    onChange={(e) => updateStatus(order.id, e.target.value)}
-                    className="input-field text-xs"
-                  >
-                    {orderStatuses.map((s) => (
-                      <option key={s} value={s}>
-                        {statusLabel(s)}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex flex-col gap-1.5">
+                    <select
+                      value={order.status}
+                      onChange={(e) => updateStatus(order.id, e.target.value)}
+                      className="input-field text-xs"
+                    >
+                      {orderStatuses.map((s) => (
+                        <option key={s} value={s}>
+                          {statusLabel(s)}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={order.payment_status}
+                      onChange={(e) => updatePaymentStatus(order, e.target.value)}
+                      className="input-field text-xs"
+                    >
+                      {paymentStatuses.map((s) => (
+                        <option key={s} value={s}>
+                          {statusLabel(s)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </td>
               </tr>
             ))}

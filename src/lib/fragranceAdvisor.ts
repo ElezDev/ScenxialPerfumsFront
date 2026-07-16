@@ -135,7 +135,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 'occasion',
     title: '¿Cuándo lo usarías más?',
-    subtitle: 'Pensá en tu rutina habitual, no en una sola ocasión.',
+    subtitle: 'Piensa en tu rutina habitual, no en una sola ocasión.',
     options: [
       {
         id: 'day',
@@ -165,8 +165,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 'feeling',
-    title: '¿Qué sensación querés transmitir?',
-    subtitle: 'Tu perfume habla antes que vos.',
+    title: '¿Qué sensación quieres transmitir?',
+    subtitle: 'Tu perfume habla antes que tú.',
     options: [
       {
         id: 'elegant',
@@ -198,7 +198,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 'notes',
     title: '¿Qué aromas te atraen más?',
-    subtitle: 'Elegí el que más resuene con vos.',
+    subtitle: 'Elige el que más resuene contigo.',
     options: [
       {
         id: 'citrus',
@@ -234,8 +234,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 'intensity',
-    title: '¿Qué intensidad preferís?',
-    subtitle: 'Cuánto querés que se note tu fragancia.',
+    title: '¿Qué intensidad prefieres?',
+    subtitle: 'Cuánto quieres que se note tu fragancia.',
     options: [
       {
         id: 'soft',
@@ -254,7 +254,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       {
         id: 'bold',
         label: 'Intensa y memorable',
-        description: 'Dejás una estela que perdura.',
+        description: 'Dejas una estela que perdura.',
         scores: { oriental: 1, amaderado: 1, gourmand: 1 },
         tags: ['intensa'],
       },
@@ -262,7 +262,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 'audience',
-    title: '¿Para quién buscás la fragancia?',
+    title: '¿Para quién buscas la fragancia?',
     subtitle: 'Muchas fragancias actuales son unisex.',
     options: [
       {
@@ -297,12 +297,12 @@ export const GUIDE_SECTIONS = [
   {
     title: '¿Cómo elegir tu perfume?',
     content:
-      'No existe un perfume "correcto": existe el que se alinea con tu piel, tu estilo y el momento. Empezá identificando qué sensación querés transmitir, en qué ocasión lo usarás y qué familias olfativas te resultan agradables. Probá siempre en la piel —en el muñón interno de la muñeca— y esperá al menos 20 minutos: el corazón y el fondo revelan la verdadera personalidad de la fragancia.',
+      'No existe un perfume "correcto": existe el que se alinea con tu piel, tu estilo y el momento. Empieza identificando qué sensación quieres transmitir, en qué ocasión lo usarás y qué familias olfativas te resultan agradables. Prueba siempre en la piel —en el interior de la muñeca— y espera al menos 20 minutos: el corazón y el fondo revelan la verdadera personalidad de la fragancia.',
   },
   {
     title: 'La pirámide olfativa',
     content:
-      'Toda fragancia se despliega en tres actos. Las notas de salida son lo primero que percibís (cítricos, hierbas). Las notas de corazón definen el carácter (flores, especias). Las notas de fondo son la estela que permanece (maderas, ámbar, almizcle). Una buena elección es la que te gusta en las tres fases, no solo al primer spray.',
+      'Toda fragancia se despliega en tres actos. Las notas de salida son lo primero que percibes (cítricos, hierbas). Las notas de corazón definen el carácter (flores, especias). Las notas de fondo son la estela que permanece (maderas, ámbar, almizcle). Una buena elección es la que te gusta en las tres fases, no solo al primer spray.',
   },
   {
     title: 'Concentraciones',
@@ -312,7 +312,7 @@ export const GUIDE_SECTIONS = [
   {
     title: 'Consejos de aplicación',
     content:
-      'Aplicá en puntos de pulso: cuello, muñecas, detrás de las orejas. Dos o tres pulverizaciones bastan. No frotés las muñecas: eso altera las moléculas. En climas cálidos, preferí concentraciones más ligeras. Guardá tus perfumes alejados del calor y la luz directa.',
+      'Aplica en puntos de pulso: cuello, muñecas, detrás de las orejas. Dos o tres pulverizaciones bastan. No frotes las muñecas: eso altera las moléculas. En climas cálidos, prefiere concentraciones más ligeras. Guarda tus perfumes alejados del calor y la luz directa.',
   },
 ]
 
@@ -363,13 +363,13 @@ export function buildFragranceProfile(answers: AdvisorAnswers): FragranceProfile
     `Tu perfil principal es ${primary.name.toLowerCase()}: ${primary.description.split('.')[0]}.`,
     `Ideal para ${primary.occasions.toLowerCase()}`,
     intensity === 'suave'
-      ? 'Buscá Eau de Toilette o aplicaciones ligeras para mantener la discreción.'
+      ? 'Busca Eau de Toilette o aplicaciones ligeras para mantener la discreción.'
       : intensity === 'intensa'
         ? 'Un Eau de Parfum o Extrait potenciará tu presencia y duración.'
         : 'Un Eau de Parfum ofrece el equilibrio perfecto entre presencia y elegancia.',
     secondary
       ? `También podrías explorar matices ${secondary.name.toLowerCase()} para variar según la ocasión.`
-      : 'Explorá variaciones dentro de la misma familia para encontrar tu firma perfecta.',
+      : 'Explora variaciones dentro de la misma familia para encontrar tu firma perfecta.',
   ]
 
   return { primary, secondary, intensity, audience, tips, keywords }

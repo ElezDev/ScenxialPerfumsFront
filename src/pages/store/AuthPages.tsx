@@ -29,7 +29,7 @@ export function LoginPage() {
       toastSuccess('Bienvenido', 'Sesión iniciada correctamente.')
       navigate('/')
     } catch {
-      toastError('Credenciales inválidas', 'Revisá tu email y contraseña.')
+      toastError('Credenciales inválidas', 'Revisa tu email y contraseña.')
     } finally {
       setLoading(false)
     }
@@ -42,9 +42,9 @@ export function LoginPage() {
         title="Ingresar"
         subtitle={
           <>
-            ¿No tenés cuenta?{' '}
+            ¿No tienes cuenta?{' '}
             <Link to="/registro" className="text-amber-400 transition hover:text-amber-300">
-              Registrate
+              Regístrate
             </Link>
           </>
         }
@@ -94,10 +94,10 @@ export function RegisterPage() {
         password_confirmation: confirmation,
         phone: (form.get('phone') as string) || undefined,
       })
-      toastSuccess('Cuenta creada', 'Ya podés empezar a comprar.')
+      toastSuccess('Cuenta creada', 'Ya puedes empezar a comprar.')
       navigate('/')
     } catch {
-      toastError('Error al registrarse', 'Verificá los datos e intentá de nuevo.')
+      toastError('Error al registrarse', 'Verifica los datos e intenta de nuevo.')
     } finally {
       setLoading(false)
     }
@@ -110,9 +110,9 @@ export function RegisterPage() {
         title="Registrarse"
         subtitle={
           <>
-            ¿Ya tenés cuenta?{' '}
+            ¿Ya tienes cuenta?{' '}
             <Link to="/login" className="text-amber-400 transition hover:text-amber-300">
-              Ingresá
+              Ingresa
             </Link>
           </>
         }
@@ -169,7 +169,7 @@ export function AdminLoginPage() {
         toastSuccess('Panel admin', `Bienvenido, ${user.name}.`)
         navigate('/admin')
       } else {
-        toastWarning('Sin permisos', 'No tenés acceso de administrador.')
+        toastWarning('Sin permisos', 'No tienes acceso de administrador.')
       }
     } catch {
       toastError('Credenciales inválidas')

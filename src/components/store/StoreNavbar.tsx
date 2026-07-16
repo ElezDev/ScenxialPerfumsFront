@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ShoppingBag, User, LogOut, Menu, X } from 'lucide-react'
+import { ShoppingCart, User, LogOut, Menu, X } from 'lucide-react'
 import { ScenxialLogo } from './ScenxialLogo'
 import { useScrolled } from '../../hooks/useScrollReveal'
 import { useAuth } from '../../context/AuthContext'
@@ -75,7 +75,7 @@ export function StoreNavbar({ transparent = false }: StoreNavbarProps) {
               to="/carrito"
               className="relative p-1.5 text-bone/80 transition-all duration-300 hover:text-aged-gold"
             >
-              <ShoppingBag className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={1.5} />
+              <ShoppingCart className="h-4 w-4 sm:h-[18px] sm:w-[18px]" strokeWidth={1.5} />
               {totalItems > 0 && (
                 <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center bg-aged-gold text-[9px] font-medium text-carbon">
                   {totalItems}

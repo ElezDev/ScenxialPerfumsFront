@@ -97,7 +97,7 @@ export function FragranceResult({
           <div className="mb-8 flex items-end justify-between">
             <div>
               <p className="font-body text-xs uppercase tracking-[0.35em] text-aged-gold">
-                Para vos
+                Para ti
               </p>
               <h3 className="mt-2 font-display text-2xl text-bone">Fragancias sugeridas</h3>
             </div>

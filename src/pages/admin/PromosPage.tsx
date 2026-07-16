@@ -247,7 +247,7 @@ export function PromosPage() {
         onPageChange={setPage}
         meta={meta}
         isEmpty={promosPage.length === 0}
-        emptyMessage="No hay promociones. Creá la primera oferta."
+        emptyMessage="No hay promociones. Crea la primera oferta."
       >
         <table className="w-full text-sm">
           <thead>

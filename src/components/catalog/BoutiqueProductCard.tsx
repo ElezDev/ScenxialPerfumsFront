@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { MessageCircle, ShoppingBag } from 'lucide-react'
+import { Droplets, MessageCircle, ShoppingCart } from 'lucide-react'
 import { formatPrice, getProductImage } from '../../lib/utils'
 import { whatsappProductQuoteUrl } from '../../lib/whatsapp'
 import type { Product } from '../../types'
@@ -16,6 +16,11 @@ export function BoutiqueProductCard({ product, onAddToCart }: BoutiqueProductCar
   const isLimited = product.compare_price != null && product.compare_price > product.price
   const inStock = product.stock > 0
   const whatsappUrl = whatsappProductQuoteUrl(product, 1, formatPrice)
+  const activeDecants = (product.decants ?? []).filter((d) => d.is_active)
+  const hasDecants = activeDecants.length > 0
+  const cheapestDecant = hasDecants
+    ? activeDecants.reduce((min, d) => (d.price < min.price ? d : min), activeDecants[0])
+    : null
 
   function handleAdd(e: MouseEvent) {
     e.preventDefault()
@@ -27,10 +32,20 @@ export function BoutiqueProductCard({ product, onAddToCart }: BoutiqueProductCar
     <article className="boutique-product-card group">
       <div className="relative">
         <Link to={`/producto/${product.slug}`} className="block">
-          {(isExclusive || isLimited) && (
-            <span className="boutique-badge">
-              {isLimited ? 'Edición limitada' : 'Exclusivo'}
-            </span>
+          {(isExclusive || isLimited || hasDecants) && (
+            <div className="absolute inset-x-0 top-0 z-10 flex flex-wrap items-start gap-1 p-0">
+              {(isExclusive || isLimited) && (
+                <span className="border border-aged-gold/40 bg-carbon/90 px-2.5 py-1.5 font-body text-[9px] uppercase tracking-[0.2em] text-aged-gold backdrop-blur-sm sm:px-3 sm:text-[10px] sm:tracking-[0.25em]">
+                  {isLimited ? 'Edición limitada' : 'Exclusivo'}
+                </span>
+              )}
+              {hasDecants && (
+                <span className="ml-auto flex shrink-0 items-center gap-1 bg-aged-gold px-2.5 py-1.5 font-body text-[9px] font-semibold uppercase tracking-[0.15em] text-carbon shadow-lg sm:px-3 sm:text-[10px] sm:tracking-[0.2em]">
+                  <Droplets className="h-3 w-3 shrink-0" strokeWidth={2} />
+                  Decants
+                </span>
+              )}
+            </div>
           )}
 
           <div className="boutique-product-image-wrap">
@@ -38,6 +53,8 @@ export function BoutiqueProductCard({ product, onAddToCart }: BoutiqueProductCar
               <img
                 src={imageUrl}
                 alt={product.name}
+                loading="lazy"
+                decoding="async"
                 className="boutique-product-image"
               />
             ) : (
@@ -69,7 +86,7 @@ export function BoutiqueProductCard({ product, onAddToCart }: BoutiqueProductCar
               className="flex h-10 w-10 items-center justify-center bg-aged-gold text-carbon shadow-lg transition-all duration-300 hover:scale-105 hover:bg-bone sm:h-11 sm:w-11"
               aria-label={`Agregar ${product.name} al carrito`}
             >
-              <ShoppingBag className="h-4 w-4" strokeWidth={1.5} />
+              <ShoppingCart className="h-4 w-4" strokeWidth={1.5} />
             </button>
           )}
         </div>
@@ -87,6 +104,12 @@ export function BoutiqueProductCard({ product, onAddToCart }: BoutiqueProductCar
         <p className="font-body text-sm font-normal tracking-wider text-bone/70 sm:text-base">
           {formatPrice(product.price)}
         </p>
+        {cheapestDecant && (
+          <p className="flex items-center justify-center gap-1 font-body text-[11px] font-medium uppercase tracking-[0.15em] text-aged-gold">
+            <Droplets className="h-3 w-3" strokeWidth={2} />
+            Decants desde {formatPrice(cheapestDecant.price)}
+          </p>
+        )}
       </Link>
 
       <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-5">
@@ -96,7 +119,7 @@ export function BoutiqueProductCard({ product, onAddToCart }: BoutiqueProductCar
             onClick={handleAdd}
             className="boutique-cta-solid flex items-center justify-center gap-1.5 text-[10px] sm:text-[11px]"
           >
-            <ShoppingBag className="h-3.5 w-3.5" />
+            <ShoppingCart className="h-3.5 w-3.5" />
             Agregar
           </button>
         ) : (

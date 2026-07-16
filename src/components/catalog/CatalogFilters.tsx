@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { BoutiqueCheckbox } from './BoutiqueCheckbox'
 import type { Brand, Category } from '../../types'
@@ -38,6 +39,19 @@ export function CatalogFilters({
   mobileOpen,
   onMobileClose,
 }: CatalogFiltersProps) {
+  const [searchValue, setSearchValue] = useState(search)
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    setSearchValue(search)
+  }, [search])
+
+  function handleSearchChange(value: string) {
+    setSearchValue(value)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => onSearch(value), 400)
+  }
+
   const panel = (
     <div className="space-y-10">
       <div>
@@ -47,9 +61,13 @@ export function CatalogFilters({
           <input
             type="search"
             placeholder="Nombre, casa, nota..."
-            defaultValue={search}
+            value={searchValue}
+            onChange={(e) => handleSearchChange(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') onSearch((e.target as HTMLInputElement).value)
+              if (e.key === 'Enter') {
+                if (debounceRef.current) clearTimeout(debounceRef.current)
+                onSearch((e.target as HTMLInputElement).value)
+              }
             }}
             className="boutique-search-input pl-6"
           />

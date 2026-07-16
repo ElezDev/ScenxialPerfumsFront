@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
+import { Minus, Plus, Trash2, ShoppingCart } from 'lucide-react'
 import { LuxurySectionHeader } from '../../components/store/LuxurySectionHeader'
 import { StorePageShell } from '../../components/store/StorePageShell'
 import { useCart } from '../../context/CartContext'
@@ -11,9 +11,9 @@ export function CartPage() {
   if (items.length === 0) {
     return (
       <StorePageShell narrow className="py-24 text-center">
-        <ShoppingBag className="mx-auto h-14 w-14 text-amber-500/30" />
+        <ShoppingCart className="mx-auto h-14 w-14 text-amber-500/30" />
         <h1 className="luxury-heading mt-6 text-2xl">Tu carrito está vacío</h1>
-        <p className="luxury-body mt-3 text-sm">Explorá nuestra colección exclusiva.</p>
+        <p className="luxury-body mt-3 text-sm">Explora nuestra colección exclusiva.</p>
         <Link to="/catalogo" className="btn-primary mt-8 px-10">
           Ir al catálogo
         </Link>
@@ -29,13 +29,18 @@ export function CartPage() {
         <div className="space-y-4 lg:col-span-2">
           {items.map((item) => {
             const imageUrl = getProductImage(item.product)
+            const unitPrice = item.decant?.price ?? item.product.price
             return (
-              <div key={item.product.id} className="luxury-card flex gap-5 p-5">
+              <div
+                key={`${item.product.id}-${item.decant?.id ?? 'full'}`}
+                className="luxury-card flex gap-5 p-5"
+              >
                 <div className="h-24 w-20 shrink-0 overflow-hidden rounded-sm border border-amber-500/15 bg-black/60">
                   {imageUrl ? (
                     <img
                       src={imageUrl}
                       alt={item.product.name}
+                      loading="lazy"
                       className="h-full w-full object-cover"
                     />
                   ) : (
@@ -47,13 +52,20 @@ export function CartPage() {
                 <div className="flex flex-1 flex-col justify-between">
                   <div>
                     <h3 className="font-display text-lg text-ivory">{item.product.name}</h3>
-                    <p className="luxury-price mt-1 text-lg">{formatPrice(item.product.price)}</p>
+                    {item.decant && (
+                      <span className="mt-1 inline-block rounded-sm border border-amber-500/25 px-2 py-0.5 text-xs text-amber-400">
+                        Decant {item.decant.ml}ml
+                      </span>
+                    )}
+                    <p className="luxury-price mt-1 text-lg">{formatPrice(unitPrice)}</p>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="flex items-center rounded-sm border border-amber-500/25 bg-black/40">
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                        onClick={() =>
+                          updateQuantity(item.product.id, item.quantity - 1, item.decant?.id)
+                        }
                         className="p-2 text-champagne transition hover:text-amber-400"
                       >
                         <Minus className="h-3 w-3" />
@@ -63,7 +75,9 @@ export function CartPage() {
                       </span>
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                        onClick={() =>
+                          updateQuantity(item.product.id, item.quantity + 1, item.decant?.id)
+                        }
                         className="p-2 text-champagne transition hover:text-amber-400"
                       >
                         <Plus className="h-3 w-3" />
@@ -71,7 +85,7 @@ export function CartPage() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => removeItem(item.product.id)}
+                      onClick={() => removeItem(item.product.id, item.decant?.id)}
                       className="text-champagne/50 transition hover:text-red-400"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -79,7 +93,7 @@ export function CartPage() {
                   </div>
                 </div>
                 <p className="self-center font-display text-lg text-ivory">
-                  {formatPrice(item.product.price * item.quantity)}
+                  {formatPrice(unitPrice * item.quantity)}
                 </p>
               </div>
             )

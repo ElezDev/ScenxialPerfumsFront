@@ -1,6 +1,7 @@
 import { type FormEvent, useEffect, useState } from 'react'
-import { Pencil, Plus, Trash2 } from 'lucide-react'
+import { Droplets, Pencil, Plus, Trash2 } from 'lucide-react'
 import { DataTable } from '../../components/admin/DataTable'
+import { DecantsField, type DecantInput } from '../../components/DecantsField'
 import { ProductImagesField, type ProductImageInput } from '../../components/ProductImagesField'
 import { adminApi } from '../../lib/api'
 import { confirmDelete, toastDeleted, toastError, toastSaved } from '../../lib/alerts'
@@ -32,6 +33,7 @@ export function ProductsPage() {
   const [editing, setEditing] = useState<Product | null>(null)
   const [form, setForm] = useState(emptyProduct)
   const [images, setImages] = useState<ProductImageInput[]>([])
+  const [decants, setDecants] = useState<DecantInput[]>([])
   const [error, setError] = useState('')
 
   const [page, setPage] = useState(1)
@@ -43,18 +45,15 @@ export function ProductsPage() {
 
   function load() {
     setLoading(true)
-    Promise.all([
-      adminApi.products({
+    adminApi
+      .products({
         page,
         per_page: PER_PAGE,
         search: search || undefined,
         category: categoryFilter || undefined,
         brand: brandFilter || undefined,
-      }),
-      adminApi.categories(),
-      adminApi.brands(),
-    ])
-      .then(([productsRes, categoriesRes, brandsRes]) => {
+      })
+      .then((productsRes) => {
         setProducts(productsRes.data.data)
         setLastPage(productsRes.data.meta.last_page)
         setMeta({
@@ -62,11 +61,18 @@ export function ProductsPage() {
           to: productsRes.data.meta.to,
           total: productsRes.data.meta.total,
         })
-        setCategories(categoriesRes.data.data)
-        setBrands(brandsRes.data.data)
       })
       .finally(() => setLoading(false))
   }
+
+  useEffect(() => {
+    Promise.all([adminApi.categories(), adminApi.brands()]).then(
+      ([categoriesRes, brandsRes]) => {
+        setCategories(categoriesRes.data.data)
+        setBrands(brandsRes.data.data)
+      },
+    )
+  }, [])
 
   useEffect(() => {
     load()
@@ -91,6 +97,7 @@ export function ProductsPage() {
     setEditing(null)
     setForm({ ...emptyProduct, category_id: categories[0]?.id ?? 0 })
     setImages([])
+    setDecants([])
     setShowForm(true)
     setError('')
   }
@@ -117,6 +124,14 @@ export function ProductsPage() {
         sort_order: img.sort_order,
       })),
     )
+    setDecants(
+      (product.decants ?? []).map((d) => ({
+        ml: d.ml,
+        price: d.price,
+        stock: d.stock,
+        is_active: d.is_active,
+      })),
+    )
     setShowForm(true)
     setError('')
   }
@@ -138,6 +153,14 @@ export function ProductsPage() {
       is_active: form.is_active,
       is_featured: form.is_featured,
       images: images.length > 0 ? images : [],
+      decants: decants
+        .filter((d) => d.ml !== '' && d.price !== '')
+        .map((d) => ({
+          ml: Number(d.ml),
+          price: Number(d.price),
+          stock: d.stock === '' ? 0 : Number(d.stock),
+          is_active: d.is_active,
+        })),
     }
 
     try {
@@ -256,6 +279,7 @@ export function ProductsPage() {
             rows={3}
           />
           <ProductImagesField value={images} onChange={setImages} />
+          <DecantsField value={decants} onChange={setDecants} />
           <div className="flex gap-4">
             <label className="flex items-center gap-2 text-sm text-stone-400">
               <input
@@ -351,7 +375,15 @@ export function ProductsPage() {
                     <span className="text-stone-600">—</span>
                   )}
                 </td>
-                <td className="px-6 py-3">{p.name}</td>
+                <td className="px-6 py-3">
+                  <div>{p.name}</div>
+                  {(p.decants ?? []).length > 0 && (
+                    <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-gold-500/10 px-2 py-0.5 text-[10px] text-gold-400">
+                      <Droplets className="h-3 w-3" />
+                      {p.decants!.length} decant{p.decants!.length !== 1 ? 's' : ''}
+                    </span>
+                  )}
+                </td>
                 <td className="px-6 py-3 text-stone-500">{p.sku}</td>
                 <td className="px-6 py-3">{formatPrice(p.price)}</td>
                 <td className="px-6 py-3">{p.stock}</td>

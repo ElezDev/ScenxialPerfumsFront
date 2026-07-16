@@ -59,7 +59,7 @@ export function AdvisoryPage() {
           Asesoría de fragancias
         </h1>
         <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-bone/70 sm:text-base">
-          Descubrí tu perfil olfativo, aprendé a elegir con criterio y encontrá las fragancias
+          Descubre tu perfil olfativo, aprende a elegir con criterio y encuentra las fragancias
           que mejor se alinean con tu estilo. Sin presión, con elegancia.
         </p>
         <div className="boutique-line mt-8 max-w-[100px]" />
@@ -70,7 +70,7 @@ export function AdvisoryPage() {
           {loadingRecs ? (
             <div className="flex flex-col items-center py-20">
               <div className="boutique-line max-w-[120px]" />
-              <p className="mt-6 font-body text-sm text-bone/50">Buscando fragancias para vos...</p>
+              <p className="mt-6 font-body text-sm text-bone/50">Buscando fragancias para ti...</p>
             </div>
           ) : (
             <FragranceResult
@@ -95,7 +95,7 @@ export function AdvisoryPage() {
                 }`}
               >
                 <Compass className="h-3.5 w-3.5" />
-                Descubrí tu perfil
+                Descubre tu perfil
               </button>
               <button
                 type="button"
@@ -118,9 +118,9 @@ export function AdvisoryPage() {
                 <div className="mb-8 flex items-start gap-3 border border-white/[0.06] bg-graphite/20 p-5">
                   <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-aged-gold" />
                   <p className="font-body text-sm leading-relaxed text-bone/65">
-                    Respondé 5 preguntas sencillas. Te diremos qué familia olfativa te representa,
+                    Responde 5 preguntas sencillas. Te diremos qué familia olfativa te representa,
                     cómo elegir tu perfume y qué fragancias de nuestra colección podrían encajar
-                    con vos.
+                    contigo.
                   </p>
                 </div>
                 <FragranceQuiz onComplete={handleQuizComplete} />
@@ -133,7 +133,7 @@ export function AdvisoryPage() {
           <section className="border-t border-white/[0.06] py-12">
             <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 md:px-10">
               <p className="font-body text-sm text-bone/60">
-                ¿Preferís una asesoría humana? Nuestro equipo te guía paso a paso.
+                ¿Prefieres una asesoría humana? Nuestro equipo te guía paso a paso.
               </p>
               <Link to="/catalogo" className="boutique-cta-outline mt-6 inline-flex">
                 Ver colección completa
